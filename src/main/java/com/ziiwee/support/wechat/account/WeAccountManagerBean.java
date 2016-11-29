@@ -16,7 +16,7 @@ public class WeAccountManagerBean implements WeAccountManager {
     @Override
     public String createQRCode(long expireSeconds, String actionInfo, long sceneId) {
         String url = "https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token=" + tokenFactory
-                .getCurrentAccessToken("").getAccessToken();
+                .getCurrentAccessToken("").getValue();
         return null;
     }
 

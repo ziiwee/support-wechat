@@ -22,4 +22,12 @@ public interface WeAccessTokenFactory {
      */
     WeAccessToken refreshAccessToken(String appId);
 
+    /**
+     * 是否以过期
+     *
+     * @param appId
+     * @return
+     */
+    boolean isExpired(String appId);
+
 }
