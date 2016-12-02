@@ -1,6 +1,6 @@
-package com.ziiwee.support.wechat.message.impl;
+package com.ziiwee.support.wechat2.message.impl;
 
-import com.ziiwee.support.wechat.message.WeAbstractMessage;
+import com.ziiwee.support.wechat2.message.WeAbstractMessage;
 
 /**
  * Created by ziiwee on 2016/11/28.

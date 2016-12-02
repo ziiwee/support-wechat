@@ -1,4 +1,4 @@
-package com.ziiwee.support.wechat.account;
+package com.ziiwee.support.wechat2.account;
 
 import com.ziiwee.support.wechat2.WeAccessToken;
 import com.ziiwee.support.wechat2.util.HttpRequestUtil;
