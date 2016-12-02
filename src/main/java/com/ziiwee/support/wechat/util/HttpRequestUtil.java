@@ -1,9 +1,7 @@
 package com.ziiwee.support.wechat.util;
 
 
-import org.apache.commons.io.IOUtils;
-
-import java.io.OutputStream;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -81,7 +79,8 @@ public class HttpRequestUtil {
                 outputStream.close();
             }
             connection.connect();
-            return IOUtils.toString(connection.getInputStream(), "UTF-8");
+//            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            return inputStream2String(connection.getInputStream());
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -133,5 +132,13 @@ public class HttpRequestUtil {
         }
     }
 
+    public static String inputStream2String(InputStream in) throws IOException {
+        StringBuffer out = new StringBuffer();
+        byte[] b = new byte[4096];
+        for (int n; (n = in.read(b)) != -1; ) {
+            out.append(new String(b, 0, n));
+        }
+        return out.toString();
+    }
 
 }
