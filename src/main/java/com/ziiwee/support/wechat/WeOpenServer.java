@@ -26,7 +26,6 @@ public class WeOpenServer {
 
     public String event(String requestBody, String signature, String timestamp, String nonce, String encrypt_type, String msg_signature) {
         try {
-
             String content = WeComponent.decrypt(requestBody, componentAppId, componentToken, componentEncodingAesKey);
             JSONObject xml = XML.toJSONObject(content).getJSONObject("xml");
 
@@ -55,10 +54,17 @@ public class WeOpenServer {
     }
 
     public String message(WeReceiveDispatch weReceiveDispatch, String body, String appId, String signature, String
-            timestamp, String nonce, String openid, String encrypt_type, String msg_signature) throws AesException {
-        String content = WeComponent.decrypt(body, componentAppId, componentToken, componentEncodingAesKey);
-        String result = weReceiveDispatch.dispatch(content);
-        return WeComponent.encrypt(result, componentAppId, componentToken, componentEncodingAesKey, timestamp, nonce);
+            timestamp, String nonce, String openid, String encrypt_type, String msg_signature) {
+        String content = null;
+        try {
+            content = WeComponent.decrypt(body, componentAppId, componentToken, componentEncodingAesKey);
+            String result = weReceiveDispatch.dispatch(content);
+            content = WeComponent.encrypt(result, componentAppId, componentToken, componentEncodingAesKey, timestamp, nonce);
+        } catch (AesException e) {
+            e.printStackTrace();
+        }
+        return content;
     }
+
 
 }

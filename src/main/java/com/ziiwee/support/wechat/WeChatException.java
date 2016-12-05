@@ -1,4 +1,4 @@
-package com.ziiwee.support.wechat2;
+package com.ziiwee.support.wechat;
 
 /**
  * Created by ziiwee on 2016/11/28.

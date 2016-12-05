@@ -2,7 +2,7 @@ package com.ziiwee.support.wechat;
 
 import com.ziiwee.support.wechat.aes.AesException;
 import com.ziiwee.support.wechat.aes.WXBizMsgCrypt;
-import com.ziiwee.support.wechat.util.HttpRequestUtil;
+import com.ziiwee.util.ZUtil;
 import org.json.JSONObject;
 import org.json.XML;
 
@@ -41,7 +41,7 @@ public class WeComponent {
             params.put("component_appid", this.appId);
             params.put("component_appsecret", this.appSecret);
             params.put("component_verify_ticket", this.verifyTicket);
-            JSONObject result = new JSONObject(HttpRequestUtil.post(url, params.toString()));
+            JSONObject result = new JSONObject(ZUtil.Http.post(url, params.toString()));
             this.accessToken = result.get("component_access_token").toString();
             this.accessTokenExpires = new Date().getTime() + (7200 * 1000);
         } catch (Exception e) {
@@ -82,7 +82,7 @@ public class WeComponent {
     public String getPreAuthCode() {
         String url = "https://api.weixin.qq.com/cgi-bin/component/api_create_preauthcode?component_access_token=";
         url += getAccessToken();
-        JSONObject result = new JSONObject(HttpRequestUtil.post(url, new JSONObject().put("component_appid", this
+        JSONObject result = new JSONObject(ZUtil.Http.post(url, new JSONObject().put("component_appid", this
                 .appId).toString()));
         return result.get("pre_auth_code").toString();
     }
@@ -114,7 +114,7 @@ public class WeComponent {
         JSONObject params = new JSONObject();
         params.put("component_appid", this.appId);
         params.put("authorization_code", authCode);
-        return HttpRequestUtil.post(url, params.toString());
+        return ZUtil.Http.post(url, params.toString());
     }
 
 
