@@ -10,14 +10,18 @@ import org.json.XML;
  */
 public class WeOpenServer {
 
-    public static WeComponent WE_COMPONENT = null;
+    private WeComponent weComponent;
 
     private String componentAppId;
     private String componentAppSecret;
     private String componentToken;
     private String componentEncodingAesKey;
 
-    public WeOpenServer(String componentAppId, String componentAppSecret, String componentToken, String componentEncodingAesKey) {
+    private WeReceiveDispatch weReceiveDispatch;
+
+    public WeOpenServer(WeReceiveDispatch weReceiveDispatch, String componentAppId, String componentAppSecret, String
+            componentToken, String componentEncodingAesKey) {
+        this.weReceiveDispatch = weReceiveDispatch;
         this.componentAppId = componentAppId;
         this.componentAppSecret = componentAppSecret;
         this.componentToken = componentToken;
@@ -33,10 +37,10 @@ public class WeOpenServer {
             if (infoType.equals("component_verify_ticket")) {
                 //推送component_verify_ticket
                 String verifyTicket = xml.get("ComponentVerifyTicket").toString();
-                if (WE_COMPONENT == null) {
-                    WE_COMPONENT = new WeComponent(componentAppId, componentAppSecret, verifyTicket);
+                if (weComponent == null) {
+                    weComponent = new WeComponent(componentAppId, componentAppSecret, verifyTicket);
                 } else {
-                    WE_COMPONENT.setVerifyTicket(verifyTicket);
+                    weComponent.setVerifyTicket(verifyTicket);
                 }
             } else {
                 /*
@@ -53,11 +57,11 @@ public class WeOpenServer {
         }
     }
 
-    public String message(WeReceiveDispatch weReceiveDispatch, String body, String appId, String signature, String
+    public String message(String requestBody, String appId, String signature, String
             timestamp, String nonce, String openid, String encrypt_type, String msg_signature) {
         String content = null;
         try {
-            content = WeComponent.decrypt(body, componentAppId, componentToken, componentEncodingAesKey);
+            content = WeComponent.decrypt(requestBody, componentAppId, componentToken, componentEncodingAesKey);
             String result = weReceiveDispatch.dispatch(content);
             content = WeComponent.encrypt(result, componentAppId, componentToken, componentEncodingAesKey, timestamp, nonce);
         } catch (AesException e) {
@@ -66,5 +70,8 @@ public class WeOpenServer {
         return content;
     }
 
+    public WeComponent getWeComponent() {
+        return this.weComponent;
+    }
 
 }

@@ -17,7 +17,7 @@ public interface WeAccessToken {
     String getValue();
 
     /**
-     * 刷新AccessToken
+     * 创建或刷新AccessToken
      */
     void createOrRefresh();
 
@@ -27,5 +27,13 @@ public interface WeAccessToken {
      * @return
      */
     long getExpirationTime();
+
+    /**
+     * 获取AppId
+     *
+     * @return
+     */
+    String getAppId();
+
 
 }

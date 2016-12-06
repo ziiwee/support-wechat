@@ -49,4 +49,9 @@ public class SecretWeAccessToken implements WeAccessToken {
     public long getExpirationTime() {
         return this.expirationTime;
     }
+
+    @Override
+    public String getAppId() {
+        return this.appId;
+    }
 }
